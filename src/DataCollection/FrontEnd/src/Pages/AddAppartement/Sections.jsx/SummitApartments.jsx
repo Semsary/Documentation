@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useApartmentContext } from "../../../context/ApartmentContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const SummitApartments = () => {
+  const [apartmentData, setApartmentData] = useState({
+    name: "",
+    description: "",
+  });
+
+  const { SaveApartementData, addNameDescription } = useApartmentContext();
+
   const Texts = { title: "الخطوة الاخيرة", description: "" };
 
+  const handleChange = (e) => {
+    setApartmentData({ ...apartmentData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    addNameDescription(apartmentData.name, apartmentData.description);
+  }, [apartmentData]);
+
+  const notify = () => toast.success("تم نشر الشقة بنجاح");
+
+  const HadelSubmet = () => {
+    // SaveApartementData();
+    notify();
+  };
   return (
     <div>
       <div className="mx-auto w-[700px] text-right fadeInAnmation">
@@ -15,6 +38,8 @@ const SummitApartments = () => {
             <input
               type="text"
               id="in1"
+              name="name"
+              onChange={handleChange}
               className="inputStyle1 mb-8"
               placeholder="قم بأختيار اسم لشقتك (أختياري)"
             />
@@ -23,15 +48,20 @@ const SummitApartments = () => {
             وصف الشقة
             <textarea
               type="text"
+              name="description"
+              onChange={handleChange}
               id="in1"
               className="inputStyle1 mb-8"
               placeholder="قم بأختيار وصف بيسط لشقتك (أختياري)"
             />
           </label>
 
-          <button className="ButtonStyle1">نشر الشقة</button>
+          <button className="ButtonStyle1" onClick={HadelSubmet}>
+            نشر الشقة
+          </button>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

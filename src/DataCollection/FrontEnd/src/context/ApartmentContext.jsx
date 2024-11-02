@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Apartment from "../Pages/AddAppartement/Sections.jsx/Apartment";
 import Rooms from "../Pages/AddAppartement/Sections.jsx/Rooms";
+import { useFirebase } from "../Firebase/useFirebase";
 
 const ApartmentContext = createContext();
 
 const ApartmentProvider = ({ children }) => {
+  const { AddApartment } = useFirebase();
   const [apartmentData, setApartmentData] = useState(() => {
     const savedData = localStorage.getItem("apartmentData");
     return savedData
@@ -77,7 +79,10 @@ const ApartmentProvider = ({ children }) => {
 
   const addRooms = (beds, bathrooms, aircondition, balcony, dressRoom) => {
     setApartmentData((prevData) => {
-      return { ...prevData, Rooms: { beds, bathrooms, aircondition, balcony, dressRoom } };
+      return {
+        ...prevData,
+        Rooms: { beds, bathrooms, aircondition, balcony, dressRoom },
+      };
     });
   };
 
@@ -97,7 +102,10 @@ const ApartmentProvider = ({ children }) => {
 
   const addServicesPrice = (water, electricity, gas, internet) => {
     setApartmentData((prevData) => {
-      return { ...prevData, ServicesPrice: { water, electricity, gas, internet } };
+      return {
+        ...prevData,
+        ServicesPrice: { water, electricity, gas, internet },
+      };
     });
   };
 
@@ -105,11 +113,41 @@ const ApartmentProvider = ({ children }) => {
     return apartmentData.ServicesPrice;
   };
 
-  const addServices = (wifi, tv, kitchen, elevator, ac, washingMachine, cooker, fridge, heater) => {
+  const SaveApartementData = () => {
+    AddApartment(apartmentData)
+      .then(() => {
+        alert("Appartement Added Successfully");
+      })
+      .catch((error) => {
+        console.error("Error adding apartment: ", error);
+      });
+  };
+
+  const addServices = (
+    wifi,
+    tv,
+    kitchen,
+    elevator,
+    ac,
+    washingMachine,
+    cooker,
+    fridge,
+    heater
+  ) => {
     setApartmentData((prevData) => {
       return {
         ...prevData,
-        Servicses: { wifi, tv, kitchen, elevator, ac, washingMachine, cooker, fridge, heater },
+        Servicses: {
+          wifi,
+          tv,
+          kitchen,
+          elevator,
+          ac,
+          washingMachine,
+          cooker,
+          fridge,
+          heater,
+        },
       };
     });
   };
@@ -138,7 +176,11 @@ const ApartmentProvider = ({ children }) => {
     return apartmentData.Images;
   };
 
-  
+  const addNameDescription = (name, description) => {
+    setApartmentData((prevData) => {
+      return { ...prevData, name, description };
+    });
+  };
 
   return (
     <ApartmentContext.Provider
@@ -160,6 +202,8 @@ const ApartmentProvider = ({ children }) => {
         getCoverImage,
         addImages,
         getImages,
+        SaveApartementData,
+        addNameDescription,
       }}
     >
       {children}
