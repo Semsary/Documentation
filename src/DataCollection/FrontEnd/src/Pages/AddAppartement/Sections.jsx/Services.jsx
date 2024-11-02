@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import "../../../styles/anmation.css";
+import { useApartmentContext } from "../../../context/ApartmentContext";
 
 const Services = () => {
+  const { addServicesPrice, getServicesPrice } = useApartmentContext();
   const Texts = {
     title: "أسعار الخدمات",
     description: "إذا كانت أسعار إيجار الشقة تشمل هذه الخدمات، يُرجى إدخالها بقيمة 0 جنيه.",
@@ -25,11 +28,17 @@ const Services = () => {
   });
 
   useEffect(() => {
-    console.log(Services);
+    // console.log(Services);
+    addServicesPrice(
+      Services.water.estimatedCost,
+      Services.electricity.estimatedCost,
+      Services.gas.estimatedCost,
+      Services.internet.estimatedCost
+    );
   }, [Services]);
 
   return (
-    <div className="container mx-auto p-6 text-right">
+    <div className="container mx-auto p-6 text-right fadeInAnmation">
       <div className="w-full max-w-[700px] mx-auto bg-white ">
         <h1 className="text-3xl font-bold mb-4">{Texts.title}</h1>
         <p className="text-gray-600 mb-8">{Texts.description}</p>
@@ -38,7 +47,7 @@ const Services = () => {
           {Object.keys(Services).map((service) => (
             <div
               key={Services[service].name}
-              className="flex justify-between items-center border-b pb-4 mb-4"
+              className="flex justify-between items-center border-b pb-4 mb-4 fadeInAnmation"
             >
               <h2 className="text-lg font-medium">{Services[service].name}</h2>
 

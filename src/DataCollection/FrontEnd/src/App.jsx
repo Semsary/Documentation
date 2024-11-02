@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./Pages/Login/LoginPage";
 import AddAppartementPage from "./Pages/AddAppartement/AddAppartementPage";
+import ApartmentProvider from './context/ApartmentContext';
 
 const Router = createBrowserRouter([
   // { path: "/", element: <Home /> },
@@ -9,7 +10,11 @@ const Router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={Router} />;
+  return (
+    <ApartmentProvider>
+      <RouterProvider router={Router} />
+    </ApartmentProvider>
+  );
 };
 
 export default App;

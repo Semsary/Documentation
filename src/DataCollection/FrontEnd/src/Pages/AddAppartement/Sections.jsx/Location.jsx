@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import "../../../styles/anmation.css";
+import { useApartmentContext } from "../../../context/ApartmentContext";
 
 const Location = () => {
   const Texts = { title: "عنوان الشقة", description: "يمكنك تزويدنا بمعلومة مكان الشقة " };
+
+  const {addLocation,getLocaion} = useApartmentContext();
 
   const {
     register,
@@ -10,9 +14,23 @@ const Location = () => {
     formState: { errors },
   } = useForm();
 
+  const [formData, setFormData] = useState({
+    Govern: "",
+    city: "",
+    floorNumber: "",
+  });
+
   const [selectedGovern, setSelectedGovern] = useState("");
 
-  const handleFormSubmit = (data) => console.log(data);
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+    // console.log(data);
+    addLocation(data.city, data.Govern, data.floorNumber);
+  };
+
+
+
+
 
   const cityOptions = {
     القاهرة: ["القاهرة", "حلوان", "المعادي", "الشروق", "أخرى"],
@@ -46,11 +64,11 @@ const Location = () => {
   };
 
   return (
-    <div className="mx-auto w-[700px] text-right">
+    <div className="mx-auto w-[700px] text-right fadeInAnmation">
       <div className="flex flex-col mx-auto">
         <h1 className="text-3xl font-semibold">{Texts.title}</h1>
         <p className="text-[#808080] mb-8 mt-5 text-s">{Texts.description}</p>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="fadeInAnmation">
           <label htmlFor="in1">
             المحافظة
             <select
@@ -79,13 +97,21 @@ const Location = () => {
                 ))}
             </select>
           </label>
-      
-
+          <label htmlFor="floorNumber">
+            رقم الطابق
+            <input
+              type="number"
+              id="floorNumber"
+              {...register("floorNumber")}
+              className="inputStyle1 mb-8"
+              placeholder="أدخل رقم الطابق"
+            />
+          </label>
           <button
             type="submit"
             className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            إرسال
+            حفظ التعديلات
           </button>
         </form>
       </div>

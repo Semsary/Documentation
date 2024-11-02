@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useApartmentContext } from "../../../context/ApartmentContext";
 
 const Rooms = () => {
   const [Details, setDetails] = useState({
@@ -24,46 +25,71 @@ const Rooms = () => {
     },
   });
 
+  //const addRooms = (beds, bathrooms, aircondition, balcony, dressRoom)
+  const { addRooms, getRooms } = useApartmentContext();
   useEffect(() => {
     console.log(Details);
+    addRooms(
+      Details.beds.value,
+      Details.bathrooms.value,
+      Details.aircondition.value,
+      Details.balcony.value,
+      Details.dressRoom.value
+    );
   }, [Details]);
+
+  useEffect(() => {
+    const rooms = getRooms();
+    setDetails((prevDetails) => {
+      return {
+        ...prevDetails,
+        beds: { ...prevDetails.beds, value: rooms.beds },
+        bathrooms: { ...prevDetails.bathrooms, value: rooms.bathrooms },
+        aircondition: { ...prevDetails.aircondition, value: rooms.aircondition },
+        balcony: { ...prevDetails.balcony, value: rooms.balcony },
+        dressRoom: { ...prevDetails.dressRoom, value: rooms.dressRoom },
+      };
+    });
+  }, []);
+
+
 
   const CounterClass = ({ room }) => {
     return (
       <div className="CounterClass flex items-center gap-3">
-      <button
-        type="button"
-        onClick={() =>
-        setDetails((prevDetails) => {
-          const updatedValue = prevDetails[room].value - 1;
-          const updatedDetails = {
-          ...prevDetails,
-          [room]: { ...prevDetails[room], value: updatedValue < 1 ? 1 : updatedValue },
-          };
-          return updatedDetails;
-        })
-        }
-        className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
-      >
-        -
-      </button>
-      <span>{Details[room].value}</span>
-      <button
-        type="button"
-        onClick={() =>
-        setDetails((prevDetails) => {
-          const updatedValue = prevDetails[room].value + 1;
-          const updatedDetails = {
-          ...prevDetails,
-          [room]: { ...prevDetails[room], value: updatedValue > 10 ? 10 : updatedValue },
-          };
-          return updatedDetails;
-        })
-        }
-        className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
-      >
-        +
-      </button>
+        <button
+          type="button"
+          onClick={() =>
+            setDetails((prevDetails) => {
+              const updatedValue = prevDetails[room].value - 1;
+              const updatedDetails = {
+                ...prevDetails,
+                [room]: { ...prevDetails[room], value: updatedValue < 1 ? 1 : updatedValue },
+              };
+              return updatedDetails;
+            })
+          }
+          className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
+        >
+          -
+        </button>
+        <span>{Details[room].value}</span>
+        <button
+          type="button"
+          onClick={() =>
+            setDetails((prevDetails) => {
+              const updatedValue = prevDetails[room].value + 1;
+              const updatedDetails = {
+                ...prevDetails,
+                [room]: { ...prevDetails[room], value: updatedValue > 10 ? 10 : updatedValue },
+              };
+              return updatedDetails;
+            })
+          }
+          className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
+        >
+          +
+        </button>
       </div>
     );
   };
@@ -92,12 +118,12 @@ const Rooms = () => {
   };
 
   return (
-    <div className="mx-auto w-[700px] text-right">
-      <h1 className="text-3xl font-semibold mb-8">أعطنا بعض المعلومات الرئيسية عن الشقة</h1>
+    <div className="mx-auto w-[700px] text-right fadeInAnmation">
+      <h1 className="text-3xl font-semibold mb-8">أعطنا بعض المعلومات الرئيسية عن الغرفة</h1>
 
       <div className="flex flex-col mx-auto">
         {Object.keys(Details).map((room, index) => (
-          <div key={index} className="flex justify-between items-center mb-6">
+          <div key={index} className=" fadeInAnmation flex justify-between items-center mb-6">
             <h2 className="text-xl font-medium">{Details[room].name}</h2>
             <div className="flex items-center gap-3">
               {index === 0 ? <CounterClass room={room} /> : <BoolenClass room={room} />}
