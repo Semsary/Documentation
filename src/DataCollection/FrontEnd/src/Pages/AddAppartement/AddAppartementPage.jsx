@@ -3,6 +3,7 @@ import Pricing from "./Sections.jsx/Pricing";
 import Rooms from "./Sections.jsx/Rooms";
 import Services from "./Sections.jsx/Services";
 import Type from "./Sections.jsx/Type";
+import UploadImages from "./Sections.jsx/UploadImages";
 
 const AddAppartementPage = () => {
   return (
@@ -12,7 +13,8 @@ const AddAppartementPage = () => {
         {/* <Location /> */}
         {/* <Rooms /> */}
         {/* <Pricing /> */}
-        <Services />
+        {/* <Services /> */}
+        <UploadImages />
       </div>
 
       <div className="bg-[#EfEfEf] w-full h-20 fixed bottom-0 left-0">
