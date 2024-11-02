@@ -1,3 +1,4 @@
+import HomeServices from "./Sections.jsx/HomeServices";
 import Location from "./Sections.jsx/Location";
 import Pricing from "./Sections.jsx/Pricing";
 import Rooms from "./Sections.jsx/Rooms";
@@ -14,7 +15,8 @@ const AddAppartementPage = () => {
         {/* <Rooms /> */}
         {/* <Pricing /> */}
         {/* <Services /> */}
-        <UploadImages />
+        {/* <UploadImages /> */}
+        <HomeServices />
       </div>
 
       <div className="bg-[#EfEfEf] w-full h-20 fixed bottom-0 left-0">
