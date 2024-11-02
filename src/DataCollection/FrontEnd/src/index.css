@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inputStyle1 {
+  @apply w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500  focus:border-2 sm:text-sm;
+}
+.ButtonStyle1 {
+  @apply bg-blue-800 hover:bg-blue-700 px-10 py-2 rounded-lg text-white  h-fit w-fit;
+}
+
+body {
+  direction: rtl;
+  font-family: "Rubik", sans-serif;
+}

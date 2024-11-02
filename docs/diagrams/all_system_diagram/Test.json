@@ -1,0 +1,56 @@
+{
+    "apartments": [
+        {
+            "id": 1,
+            "name": "Apartment 1",
+            "location": "Luxor, Egypt",
+            "price": 5000,
+            "currency": "EGP",
+            "description": "A bright and spacious apartment in the heart of Luxor.",
+            "images": [
+                "image1.jpg",
+                "image2.jpg"
+            ],
+            "feedbacks": [
+                {
+                    "userID": 101,
+                    "rate1": 4.5,
+                    "rate2": 5,
+                    "comment": "Great place, close to the university."
+                },
+                {
+                    "userID": 102,
+                    "rate1": 4,
+                    "rate2": 4.5,
+                    "comment": "Nice and clean, but the price is a bit high."
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Apartment 2",
+            "location": "Cairo, Egypt",
+            "price": 3500,
+            "currency": "EGP",
+            "images": [
+                "studio1.jpg",
+                "studio2.jpg"
+            ],
+            "description": "A compact and comfortable studio near downtown Cairo.",
+            "feedbacks": [
+                {
+                    "userID": 103,
+                    "rate1": 4,
+                    "rate2": 3.5,
+                    "comment": "Good location, but small space."
+                },
+                {
+                    "userID": 104,
+                    "rate1": 5,
+                    "rate2": 4.8,
+                    "comment": "Perfect for short stays, and very affordable!"
+                }
+            ]
+        }
+    ]
+}
