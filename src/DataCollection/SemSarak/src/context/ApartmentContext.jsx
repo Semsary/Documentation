@@ -56,6 +56,8 @@ const ApartmentProvider = ({ children }) => {
           CoverImage: "",
           Images: [],
           display: false,
+          Badge: "",
+          MetaData: "",
           Servicses: {
             wifi: false,
             tv: false,

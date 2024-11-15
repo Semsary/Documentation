@@ -4,11 +4,27 @@ import toast, { Toaster } from "react-hot-toast";
 import { redirect, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
-const SummitApartments = () => {
+const SummitApartments = ({handleNext}) => {
+
+
+  const redirectToHome = () => {
+    setTimeout(() => {
+      // Navigate("/");
+      // notify2();
+      handleNext();
+
+    }, 1500);   
+    
+  };
+
+
+
   const [apartmentData, setApartmentData] = useState({
     name: "",
     description: "",
   });
+
+
 
   const { getUserId, getUserFullEmail } = useAuth();
   const Uid = getUserId();
@@ -62,14 +78,7 @@ const SummitApartments = () => {
   };
 
 
-  const redirectToHome = () => {
-    setTimeout(() => {
-      // Navigate("/");
-      notify2();
-
-    }, 1500);   
-    
-  };
+  
   return (
     <div>
       <div className="mx-auto max-w-[700px] p-10 text-right fadeInAnmation">

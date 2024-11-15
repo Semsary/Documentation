@@ -42,6 +42,18 @@ const WaitingAcc = () => {
           </p>
         </div>
       )}
+
+        <p className="text-lg mt-8">
+            شكرًا لتسجيلك معنا، وسنقوم بإشعارك فور نشر الشقة.
+            </p>
+
+            {/* back to home page */}
+            <button
+                className="w-full px-4 py-2 mt-10 text-xl font-medium text-white bg-mainColor border border-transparent rounded-md shadow-sm hover:bg-mainColorHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => window.location.replace("/")}
+            >
+                العودة للصفحة الرئيسية
+            </button>
     </div>
   );
 };

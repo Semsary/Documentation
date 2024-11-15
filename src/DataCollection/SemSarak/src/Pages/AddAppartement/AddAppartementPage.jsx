@@ -13,20 +13,7 @@ import Logo from "../../assets/Images/Logo/Logo (2).png";
 import WaitingAcc from "./Sections.jsx/WatingAcc";
 
 const AddAppartementPage = () => {
-  const sections = [
-    // <Apartment key="Apartment" />,
-    <Type key="Type" />,
-    <Rooms key="Rooms" />,
-    <Location key="Location" />,
-    <Pricing key="Pricing" />,
-    <Services key="Services" />,
-    <UploadImages key="UploadImages" />,
-    <HomeServices key="HomeServices" />,
-    <SurroundingServices key="SurroundingServices" />,
-    <SummitApartments key="SummitApartments" />,
-    <WaitingAcc key="WaitingAcc" />,
-  ];
-
+  
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   const handleNext = () => {
@@ -40,6 +27,21 @@ const AddAppartementPage = () => {
       setCurrentSectionIndex(currentSectionIndex - 1);
     }
   };
+  
+  const sections = [
+    // <Apartment key="Apartment" />,
+    <Type key="Type" />,
+    <Rooms key="Rooms" />,
+    <Location key="Location" />,
+    <Pricing key="Pricing" />,
+    <Services key="Services" />,
+    <UploadImages key="UploadImages" />,
+    <HomeServices key="HomeServices" />,
+    <SurroundingServices key="SurroundingServices" />,
+    <SummitApartments key="SummitApartments" handleNext={handleNext} />,
+    <WaitingAcc key="WaitingAcc" />,
+  ];
+
 
   return (
     <div className=" flex flex-col justify-between">

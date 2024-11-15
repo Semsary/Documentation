@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import { FaBed, FaBath, FaMapMarkerAlt, FaBuilding } from "react-icons/fa"; // Import icons from react-icons
+import { Link } from "react-router-dom";
+import { FaBed, FaBath, FaMapMarkerAlt, FaBuilding } from "react-icons/fa";
 import formatCurrency from "../../../Functions/formatCurrency";
 
 const ApartmentCard = ({ apartment }) => {
   return (
     <div
-      className="max-w-sm  mx-auto bg-white shadow-lg w-full rounded-lg overflow-hidden
+      className="max-w-sm mx-auto bg-white shadow-lg w-full rounded-lg overflow-hidden
         transition duration-200 ease-in-out transform fadeInAnmation hover:shadow-xl"
       style={{ fontFamily: "Cairo" }}
     >
@@ -18,9 +18,14 @@ const ApartmentCard = ({ apartment }) => {
           alt="Apartment"
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t  from-black hover:from-gray-700 
+          className="absolute inset-0 bg-gradient-to-t from-black hover:from-gray-700 
         transition duration-200 ease-in-out transform to-transparent opacity-50 brightness-95"
         ></div>
+        
+        {/* Badge over the image */}
+        <div className="absolute top-2 left-2 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-bold">
+          مميزة
+        </div>
       </div>
 
       <div className="p-4">
@@ -52,7 +57,7 @@ const ApartmentCard = ({ apartment }) => {
 
         <div className="mt-4 flex justify-between flex-row">
           <div className="flex flex-row-reverse justify-between ">
-            <span className="text-xl  font-extrabold text-gray-900">
+            <span className="text-xl font-extrabold text-gray-900">
               {formatCurrency(apartment.price)}
             </span>
           </div>
