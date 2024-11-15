@@ -32,27 +32,30 @@ const Pricing = () => {
     },
   });
 
+  // Handle rent type change
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
-
     const selectedRentType = rentType[selectedValue];
 
     if (selectedRentType) {
       setRentTypeSelect({ value: selectedValue, name: selectedRentType.name });
-      setPrice({ ...price, type: selectedValue });
+      setPrice((prevPrice) => ({ ...prevPrice, type: selectedValue }));
+      addPrice(selectedRentType.value, price.price, price.semsar, price.guarantee);
+      // toast.success("تم حفظ نوع الإيجار بنجاح");
     } else {
       console.error("Invalid rent type selected:", selectedValue);
     }
   };
 
-  const HandelSubmit = (e) => {
-    e.preventDefault();
-    const priceValue = e.target[1].value;
-    const semsar = e.target[2].value;
-    const guarantee = e.target[3].value;
-    const Type = rentTypeSelect.value;
-    addPrice(Type, priceValue, semsar, guarantee);
-    toast.success("تم حفظ الأسعار بنجاح");
+  // Handle input changes and save data
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPrice((prevPrice) => {
+      const updatedPrice = { ...prevPrice, [name]: value };
+      addPrice(updatedPrice.type, updatedPrice.price, updatedPrice.semsar, updatedPrice.guarantee);
+      // toast.success("تم حفظ الأسعار بنجاح");
+      return updatedPrice;
+    });
   };
 
   return (
@@ -64,7 +67,7 @@ const Pricing = () => {
         </p>
 
         {/* Pricing Form */}
-        <form onSubmit={HandelSubmit}>
+        <form>
           <div className="space-y-4">
             {/* Rent Type Selector */}
             <div className="py-3 justify-between items-center ">
@@ -90,11 +93,12 @@ const Pricing = () => {
               <input
                 type="number"
                 id="in1"
+                name="price"
                 min={0}
                 max={100000}
                 className="inputStyle1"
                 value={price.price}
-                onChange={(e) => setPrice({ ...price, price: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
 
@@ -104,11 +108,12 @@ const Pricing = () => {
               <input
                 type="number"
                 id="in2"
+                name="semsar"
                 min={0}
                 max={100000}
                 className="inputStyle1"
                 value={price.semsar}
-                onChange={(e) => setPrice({ ...price, semsar: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
 
@@ -118,23 +123,14 @@ const Pricing = () => {
               <input
                 type="number"
                 id="in3"
+                name="guarantee"
                 min={0}
                 max={100000}
                 className="inputStyle1"
                 value={price.guarantee}
-                onChange={(e) =>
-                  setPrice({ ...price, guarantee: e.target.value })
-                }
+                onChange={handleInputChange}
               />
             </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-mainColor border border-transparent rounded-md shadow-sm hover:bg-mainColorHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              حفظ الاسعار
-            </button>
           </div>
         </form>
       </div>

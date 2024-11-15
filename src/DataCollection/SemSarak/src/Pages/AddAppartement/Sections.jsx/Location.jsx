@@ -10,12 +10,13 @@ const Location = () => {
     description: "يمكنك تزويدنا بمعلومة مكان الشقة ",
   };
 
-  const { addLocation, getLocaion } = useApartmentContext();
+  const { addLocation } = useApartmentContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue, // to programmatically set form values
   } = useForm();
 
   const [formData, setFormData] = useState({
@@ -26,19 +27,31 @@ const Location = () => {
 
   const [selectedGovern, setSelectedGovern] = useState("");
 
-  const handleFormSubmit = (data) => {
-    setFormData(data);
-    // console.log(data);
-    addLocation(data.city, data.Govern, data.floorNumber);
-toast.success("تم حفظ المحافظة والمدينة بنجاح");
+  // Update the form state and call addLocation on change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+      addLocation(updatedData.city, updatedData.Govern, updatedData.floorNumber);
+      return updatedData;
+    });
+  };
 
+  // Handle select change for province
+  const handleGovernChange = (e) => {
+    setSelectedGovern(e.target.value);
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, Govern: e.target.value };
+      addLocation(updatedData.city, updatedData.Govern, updatedData.floorNumber);
+      return updatedData;
+    });
   };
 
   const cityOptions = {
     القاهرة: ["القاهرة", "حلوان", "المعادي", "الشروق", "أخرى"],
     الجيزة: ["الجيزة", "الحوامدية", "البدرشين", "أكتوبر", "أخرى"],
     الإسكندرية: ["الإسكندرية", "برج العرب", "أبو قير", "سيدي بشر", "أخرى"],
-    الأقصر: ["الأقصر", "القرنة", "البياضية", "إسنا", "أخرى"],
+    الأقصر: ["الأقصر", "القرنة", "البياضية", "إسنا","العوامية","طيبة", "أخرى"],
     أسوان: ["أسوان", "دراو", "كوم أمبو", "أبو سمبل", "أخرى"],
     المنيا: ["المنيا", "ملوي", "مغاغة", "العدوة", "أخرى"],
     سوهاج: ["سوهاج", "جرجا", "المراغة", "طهطا", "أخرى"],
@@ -65,22 +78,21 @@ toast.success("تم حفظ المحافظة والمدينة بنجاح");
     حلوان: ["حلوان", "15 مايو", "التبين", "المعصرة", "أخرى"],
   };
 
+
   return (
     <div className="mx-auto max-w-[700px] px-10 text-right fadeInAnmation">
       <div className="flex flex-col mx-auto">
         <h1 className="text-3xl font-semibold">{Texts.title}</h1>
         <p className="text-[#808080] mb-8 mt-5 text-s">{Texts.description}</p>
-        <form
-          onSubmit={handleSubmit(handleFormSubmit)}
-          className="fadeInAnmation"
-        >
+        <form className="fadeInAnmation">
           <label htmlFor="in1">
             المحافظة
             <select
               id="in1"
-              {...register("Govern")}
+              name="Govern"
+              value={formData.Govern}
+              onChange={handleGovernChange}
               className="inputStyle1 mb-8"
-              onChange={(e) => setSelectedGovern(e.target.value)}
             >
               <option value="">اختر المحافظة</option>
               {Object.keys(cityOptions).map((govern) => (
@@ -92,7 +104,13 @@ toast.success("تم حفظ المحافظة والمدينة بنجاح");
           </label>
           <label htmlFor="in2">
             المدينة
-            <select id="in2" {...register("city")} className="inputStyle1 mb-8">
+            <select
+              id="in2"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="inputStyle1 mb-8"
+            >
               <option value="">اختر المدينة</option>
               {selectedGovern &&
                 cityOptions[selectedGovern].map((city) => (
@@ -107,17 +125,13 @@ toast.success("تم حفظ المحافظة والمدينة بنجاح");
             <input
               type="number"
               id="floorNumber"
-              {...register("floorNumber")}
+              name="floorNumber"
+              value={formData.floorNumber}
+              onChange={handleChange}
               className="inputStyle1 mb-8"
               placeholder="أدخل رقم الطابق"
             />
           </label>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 text-sm font-medium text-white bg-mainColor border border-transparent rounded-md shadow-sm hover:bg-mainColorHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            حفظ المحافظة والمدينة
-          </button>
         </form>
       </div>
       <Toaster position="top-center" reverseOrder={false} />

@@ -10,6 +10,7 @@ import SummitApartments from "./Sections.jsx/SummitApartments";
 import SurroundingServices from "./Sections.jsx/SurroundingServices";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/Images/Logo/Logo (2).png";
+import WaitingAcc from "./Sections.jsx/WatingAcc";
 
 const AddAppartementPage = () => {
   const sections = [
@@ -23,6 +24,7 @@ const AddAppartementPage = () => {
     <HomeServices key="HomeServices" />,
     <SurroundingServices key="SurroundingServices" />,
     <SummitApartments key="SummitApartments" />,
+    <WaitingAcc key="WaitingAcc" />,
   ];
 
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
@@ -73,7 +75,7 @@ const AddAppartementPage = () => {
       <div className="bg-[#EfEfEf] w-full h-20 fixed bottom-0 left-0">
         <div
           className={`bg-blue-900 h-1 transition-all duration-500 ease-in-out`}
-          style={{ width: `${((currentSectionIndex + 1) * 100) / 9}%` }}
+          style={{ width: `${((currentSectionIndex + 1) * 100) / 10}%` }}
         ></div>
 
         <div className="bg-blue-100 w-full h-full flex justify-between p-5">

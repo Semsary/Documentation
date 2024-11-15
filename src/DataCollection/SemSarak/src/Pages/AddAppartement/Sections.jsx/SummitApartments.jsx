@@ -34,6 +34,8 @@ const SummitApartments = () => {
   }, [apartmentData]);
 
   const notify = () => toast.success("تم نشر الشقة بنجاح");
+  const notify2 = () => toast.success("الشقة قيد المراجعة حاليًا، وسيتم نشرها في حال تمت الموافقة عليها.");
+
 
   const HadelSubmet = () => {
 
@@ -62,8 +64,10 @@ const SummitApartments = () => {
 
   const redirectToHome = () => {
     setTimeout(() => {
-      Navigate("/");
-    }, 2000);   
+      // Navigate("/");
+      notify2();
+
+    }, 1500);   
     
   };
   return (
@@ -104,7 +108,8 @@ const SummitApartments = () => {
           </button>
         </div>
       </div>
-      <Toaster />
+      <Toaster   reverseOrder={true}
+ />
     </div>
   );
 };

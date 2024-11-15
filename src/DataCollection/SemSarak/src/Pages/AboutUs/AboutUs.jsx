@@ -120,7 +120,7 @@ const AboutUs = () => {
 
           <div className="text-center mt-16">
             <p className="text-gray-600">
-              This is the demo version of the website, version 1.2.1 © 2024.
+              This is the demo version of the website, version 1.3.1 © 2024.
             </p>
           </div>
         </div>
