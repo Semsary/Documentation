@@ -2,10 +2,77 @@ import { createContext, useContext, useState, useEffect } from "react";
 import Apartment from "../Pages/AddAppartement/Sections.jsx/Apartment";
 import Rooms from "../Pages/AddAppartement/Sections.jsx/Rooms";
 import { useFirebase } from "../Firebase/useFirebase";
+import Services from "../Pages/AddAppartement/Sections.jsx/Services";
 
 const ApartmentContext = createContext();
 
 const ApartmentProvider = ({ children }) => {
+
+
+  //  addServices(
+  //    Services.wifi.avalible,
+  //    Services.Tv.avalible,
+  //    Services.Kitchen.avalible,
+  //    Services.elevator.avalible,
+  //    Services.AirCondition.avalible,
+  //    Services.WashingMachine.avalible,
+  //    Services.cooker.avalible,
+  //    Services.fridge.avalible,
+  // //    Services.heater.avalible,
+  // //    Services.internet.avalible,
+  // //    Services.salon.avalible,
+  // //    Services.diningRoom.avalible
+  // // );
+  
+
+  //  const [services, setServices] = useState({
+  //    hospital: {
+  //      name: "المستشفى",
+  //      available: false,
+  //      icon: <FaHospital size={30} />,
+  //    },
+  //    gym: {
+  //      name: "صالة الألعاب الرياضية",
+  //      available: false,
+  //      icon: <CgGym size={30} />,
+  //    },
+  //    playground: {
+  //      name: "ملعب كرة القدم",
+  //      available: false,
+  //      icon: <IoIosFootball size={30} />,
+  //    },
+  //    school: {
+  //      name: "المدرسة",
+  //      available: false,
+  //      icon: <FaSchool size={30} />,
+  //    },
+  //    university: {
+  //      name: "الجامعة",
+  //      available: false,
+  //      icon: <FaUniversity size={30} />,
+  //    },
+  //    supermarket: {
+  //      name: "السوبر ماركت",
+  //      available: false,
+  //      icon: <FaStore size={30} />,
+  //    },
+  //    restaurant: {
+  //      name: "المطعم",
+  //      available: false,
+  //      icon: <FaUtensils size={30} />,
+  //    },
+  //    parking: {
+  //      name: "موقف السيارات",
+  //      available: false,
+  //      icon: <FaParking size={30} />,
+  //    },
+  //    bank: {
+  //      name: "البنك",
+  //      available: false,
+  //      icon: <BsBank size={30} />,
+  //    },
+  //  });
+
   const { AddApartment } = useFirebase();
   const [apartmentData, setApartmentData] = useState(() => {
     const savedData = localStorage.getItem("apartmentData");
@@ -18,13 +85,28 @@ const ApartmentProvider = ({ children }) => {
             area: "",
             floor: "",
           },
-          Rooms: {
+          ApartmentInfo: {
             beds: 1,
-            bathrooms: false,
-            aircondition: false,
-            balcony: false,
-            dressRoom: false,
-          },
+            bedrooms: 1,
+            bathrooms: 1,
+            acUnits: 1,
+            balconies: 1,
+            tables: 1,
+            chairs: 1,
+        },
+        AreaServices:
+        {
+          hospital: false,
+          gym: false,
+          playground: false,
+          school: false,
+          university: false,
+          supermarket: false,
+          restaurant: false,
+          parking: false,
+          bank: false,
+        },
+
           Price: {
             HomeType: "",
             price: 0,
@@ -49,6 +131,9 @@ const ApartmentProvider = ({ children }) => {
             cooker: false,
             fridge: false,
             heater: false,
+            internet: false,
+            salon: false,
+            diningRoom: false,
           },
         };
   });
@@ -75,19 +160,6 @@ const ApartmentProvider = ({ children }) => {
 
   const getLocaion = () => {
     return apartmentData.Location;
-  };
-
-  const addRooms = (beds, bathrooms, aircondition, balcony, dressRoom) => {
-    setApartmentData((prevData) => {
-      return {
-        ...prevData,
-        Rooms: { beds, bathrooms, aircondition, balcony, dressRoom },
-      };
-    });
-  };
-
-  const getRooms = () => {
-    return apartmentData.Rooms;
   };
 
   const addPrice = (HomeType, price, semsar, guarantee) => {
@@ -132,7 +204,11 @@ const ApartmentProvider = ({ children }) => {
     washingMachine,
     cooker,
     fridge,
-    heater
+    heater,
+    internet,
+    salon,
+    diningRoom
+
   ) => {
     setApartmentData((prevData) => {
       return {
@@ -147,6 +223,9 @@ const ApartmentProvider = ({ children }) => {
           cooker,
           fridge,
           heater,
+          internet,
+          salon,
+          diningRoom
         },
       };
     });
@@ -182,6 +261,60 @@ const ApartmentProvider = ({ children }) => {
     });
   };
 
+  const addApartmentInfo = (
+    acUnits,
+    bedrooms,
+    bathrooms,
+    beds,
+    balconies,
+    tables,
+    chairs
+  ) => {
+    //Update with the new value only
+    setApartmentData((prevData) => {
+      return {
+        ...prevData,
+        ApartmentInfo: {
+          acUnits,
+          bedrooms,
+          bathrooms,
+          beds,
+          balconies,
+          tables,
+          chairs,
+        },
+      };
+    });
+  };
+
+  const getApartmentInfo = () => {
+    return apartmentData.ApartmentInfo;
+  };
+
+
+  const addAreaServices = (hospital, gym, playground, school, university, supermarket, restaurant, parking, bank) => {
+    setApartmentData((prevData) => {
+      return {
+        ...prevData,
+        AreaServices: {
+          hospital,
+          gym,
+          playground,
+          school,
+          university,
+          supermarket,
+          restaurant,
+          parking,
+          bank,
+        },
+      };
+    });
+  };
+
+  const getAreaServices = () => {
+    return apartmentData.AreaServices;
+  }
+
   return (
     <ApartmentContext.Provider
       value={{
@@ -190,8 +323,8 @@ const ApartmentProvider = ({ children }) => {
         addLocation,
         getHomeType,
         getLocaion,
-        addRooms,
-        getRooms,
+        addApartmentInfo,
+        getApartmentInfo,
         addPrice,
         getPrice,
         addServicesPrice,
@@ -204,6 +337,8 @@ const ApartmentProvider = ({ children }) => {
         getImages,
         SaveApartementData,
         addNameDescription,
+        addAreaServices,
+        getAreaServices
       }}
     >
       {children}

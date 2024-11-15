@@ -23,7 +23,7 @@ const SummitApartments = () => {
   const notify = () => toast.success("تم نشر الشقة بنجاح");
 
   const HadelSubmet = () => {
-    // SaveApartementData();
+    SaveApartementData();
     notify();
   };
   return (

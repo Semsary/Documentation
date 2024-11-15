@@ -9,7 +9,7 @@ const Pricing = () => {
   const Texts = { title: "الاسعار", description: "  " };
   const [rentTypeSelect, setRentTypeSelect] = useState({
     value: "Type1", // Default value as string
-    name: "هل قمت باستئجار الشقة بالكامل؟",
+    name: "استئجار الشقة بالكامل",
   });
 
   const [price, setPrice] = useState({

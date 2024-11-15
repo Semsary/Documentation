@@ -7,20 +7,24 @@ import Services from "./Sections.jsx/Services";
 import Type from "./Sections.jsx/Type";
 import UploadImages from "./Sections.jsx/UploadImages";
 import SummitApartments from "./Sections.jsx/SummitApartments";
+import Apartment from "./Sections.jsx/Apartment";
+import SurroundingServices from "./Sections.jsx/SurroundingServices";
 
 const AddAppartementPage = () => {
   const sections = [
+    // <Apartment key="Apartment" />,
+    <Rooms key="Rooms" />,
     <Type key="Type" />,
     <Location key="Location" />,
-    <Rooms key="Rooms" />,
     <Pricing key="Pricing" />,
     <Services key="Services" />,
     <UploadImages key="UploadImages" />,
     <HomeServices key="HomeServices" />,
+    <SurroundingServices key="SurroundingServices" />,
     <SummitApartments key="SummitApartments" />,
   ];
 
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(7);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   const handleNext = () => {
     if (currentSectionIndex < sections.length - 1) {
@@ -46,7 +50,7 @@ const AddAppartementPage = () => {
       <div className="bg-[#EfEfEf] w-full h-20 fixed bottom-0 left-0">
         <div
           className={`bg-blue-900 h-1 transition-all duration-500 ease-in-out`}
-          style={{ width: `${((currentSectionIndex + 1) * 100) / 8}%` }}
+          style={{ width: `${((currentSectionIndex + 1) * 100) / 9}%` }}
         ></div>
 
         <div className="bg-blue-100 w-full h-full flex justify-between p-5">

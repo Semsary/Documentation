@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ImageUpload from "./ImageUpload";
 import { useApartmentContext } from "../../../context/ApartmentContext";
+// import { db, storage } from "../../../Firebase/Firebase";
 
 const UploadImages = () => {
   const [coverImage, setCoverImage] = useState(null);
   const [additionalImages, setAdditionalImages] = useState([]);
 
-  const { addCoverImage, getCoverImage, addImages, getImages } = useApartmentContext();
+  const { addCoverImage, getCoverImage, addImages, getImages } =
+    useApartmentContext();
 
   const Texts = {
     title: "رفع الصور",
@@ -30,10 +32,11 @@ const UploadImages = () => {
 
   const handleCoverImageChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setCoverImage(imageUrl);
-      addCoverImage(file); 
+      addCoverImage(file);
     }
   };
 
@@ -41,7 +44,7 @@ const UploadImages = () => {
     const files = Array.from(event.target.files);
     const newImages = files.map((file) => URL.createObjectURL(file));
     setAdditionalImages(newImages);
-    addImages(files); 
+    addImages(files);
   };
 
   useEffect(() => {
@@ -61,19 +64,38 @@ const UploadImages = () => {
 
         {/* Cover Image Input */}
         <div className="flex flex-col gap-4 fadeInAnmation">
-          <ImageUpload id="coverImage" label="صورة الغلاف" onChange={handleCoverImageChange} />
-          {coverImage && <img src={coverImage} alt="Cover Preview" className="mt-2 w-full h-auto border rounded" />}
+          <ImageUpload
+            id="coverImage"
+            label="صورة الغلاف"
+            onChange={handleCoverImageChange}
+          />
+          {coverImage && (
+            <img
+              src={coverImage}
+              alt="Cover Preview"
+              className="mt-2 w-full h-auto border rounded"
+            />
+          )}
         </div>
 
         {/* Additional Images Input */}
         <div className="flex flex-col gap-4 mt-6 fadeInAnmation">
-          <ImageUpload id="additionalImages" label="صور اضافية" onChange={handleAdditionalImagesChange} />
+          <ImageUpload
+            id="additionalImages"
+            label="صور اضافية"
+            onChange={handleAdditionalImagesChange}
+          />
         </div>
 
         {/* Grid Display for Additional Images */}
         <div className="grid grid-cols-5 gap-4 mt-6 fadeInAnmation">
           {additionalImages.map((image, index) => (
-            <img key={index} src={image} alt={`Additional Preview ${index + 1}`} className="w-full h-auto border rounded" />
+            <img
+              key={index}
+              src={image}
+              alt={`Additional Preview ${index + 1}`}
+              className="w-full h-auto border rounded"
+            />
           ))}
         </div>
       </div>

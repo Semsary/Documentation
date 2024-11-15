@@ -4,6 +4,8 @@ import { TbFridge, TbAirConditioning } from "react-icons/tb";
 import { GiGasStove, GiWashingMachine } from "react-icons/gi";
 import { FaKitchenSet, FaTv, FaWifi } from "react-icons/fa6";
 import { useApartmentContext } from "../../../context/ApartmentContext";
+import { RiArmchairFill } from "react-icons/ri";
+import { BsEthernet } from "react-icons/bs";
 
 const HomeServices = () => {
   const { addServices, getServices } = useApartmentContext();
@@ -53,8 +55,22 @@ const HomeServices = () => {
       avalible: false,
       icon: <PiElevatorDuotone size={30} />,
     },
+    internet: {
+      name: "الانترنت الأرضي",
+      avalible: false,
+      icon: <BsEthernet size={30} />,
+    },
+    salon: {
+      name: "صالة الجلوس",
+      avalible: false,
+      icon: <RiArmchairFill size={30} />,
+    },
+    diningRoom: {
+      name: "غرفة الطعام",
+      avalible: false,
+      icon: <FaKitchenSet size={30} />,
+    },
   });
-
 
   useEffect(() => {
     addServices(
@@ -66,9 +82,13 @@ const HomeServices = () => {
       Services.WashingMachine.avalible,
       Services.cooker.avalible,
       Services.fridge.avalible,
-      Services.heater.avalible
+      Services.heater.avalible,
+      Services.internet.avalible,
+      Services.salon.avalible,
+      Services.diningRoom.avalible
     );
   }, [Services]);
+
   const Texts = {
     title: "اضف الخدمات المتوفرة في الشقة",
     description: "اختر الخدمات المتوفرة في الشقة التي تريد اضافتها",
@@ -84,7 +104,11 @@ const HomeServices = () => {
             <div
               key={Services[service].name}
               className={`flex flex-col items-center justify-center p-4 py-6 border fadeInAnmation
-             ${!Services[service].avalible ? "" : "bg-gray-100 border-black border-2"} 
+             ${
+               !Services[service].avalible
+                 ? ""
+                 : "bg-gray-100 border-black border-2"
+             } 
               rounded-lg`}
               onClick={() => {
                 setServices((prevServices) => {
@@ -101,7 +125,9 @@ const HomeServices = () => {
             >
               <div className="flex justify-between gap-10">
                 <div> {Services[service].icon}</div>
-                <h2 className="text-lg font-medium mt-2">{Services[service].name}</h2>
+                <h2 className="text-lg font-medium mt-2">
+                  {Services[service].name}
+                </h2>
               </div>
               {/* {Services[service].icon} */}
               {/* {Services[service].avalible ? "متاح" : "غير متاح"} */}

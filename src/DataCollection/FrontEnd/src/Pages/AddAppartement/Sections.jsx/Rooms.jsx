@@ -2,131 +2,145 @@ import { useEffect, useState } from "react";
 import { useApartmentContext } from "../../../context/ApartmentContext";
 
 const Rooms = () => {
-  const [Details, setDetails] = useState({
-    beds: {
-      name: "الاسرة فى الغرفة",
+  const { addApartmentInfo, getApartmentInfo } = useApartmentContext();
+  const [roomInfo, setRoomInfo] = useState({
+    bedrooms: {
+      label: "عدد غرف النوم",
       value: 1,
     },
     bathrooms: {
-      name: "هل يوجد حمام بالغرفة",
-      value: true,
+      label: "عدد الحمامات",
+      value: 1,
     },
-    aircondition: {
-      name: "هل يوجد تكييف",
-      value: true,
+    acUnits: {
+      label: "عدد التكييفات",
+      value: 1,
     },
-    balcony: {
-      name: "هل يوجد شرفة",
-      value: true,
+    beds: {
+      label: "عدد السراير",
+      value: 1,
     },
-    dressRoom: {
-      name: "هل يوجد دولاب ملابس",
-      value: true,
+    balconies: {
+      label: "عدد الشرفات",
+      value: 1,
+    },
+    tables: {
+      label: "عدد الطاولات",
+      value: 1,
+    },
+    chairs: {
+      label: "عدد الكراسي",
+      value: 1,
     },
   });
 
-  //const addRooms = (beds, bathrooms, aircondition, balcony, dressRoom)
-  const { addRooms, getRooms } = useApartmentContext();
-  useEffect(() => {
-    console.log(Details);
-    addRooms(
-      Details.beds.value,
-      Details.bathrooms.value,
-      Details.aircondition.value,
-      Details.balcony.value,
-      Details.dressRoom.value
-    );
-  }, [Details]);
+  const handleDecrement = (room) => {
+    if (roomInfo[room].value > 1) {
+      setRoomInfo({
+        ...roomInfo,
+        [room]: {
+          ...roomInfo[room],
+          value: roomInfo[room].value - 1,
+        },
+      });
+    }
+  };
+
+  const handleIncrement = (room) => {
+    setRoomInfo({
+      ...roomInfo,
+      [room]: {
+        ...roomInfo[room],
+        value: roomInfo[room].value + 1,
+      },
+    });
+  };
 
   useEffect(() => {
-    const rooms = getRooms();
-    setDetails((prevDetails) => {
-      return {
-        ...prevDetails,
-        beds: { ...prevDetails.beds, value: rooms.beds },
-        bathrooms: { ...prevDetails.bathrooms, value: rooms.bathrooms },
-        aircondition: { ...prevDetails.aircondition, value: rooms.aircondition },
-        balcony: { ...prevDetails.balcony, value: rooms.balcony },
-        dressRoom: { ...prevDetails.dressRoom, value: rooms.dressRoom },
-      };
-    });
+    const apartmentInfo = getApartmentInfo();
+    if (apartmentInfo) {
+      setRoomInfo({
+        bedrooms: {
+          label: "عدد غرف النوم",
+          value: apartmentInfo.bedrooms,
+        },
+        bathrooms: {
+          label: "عدد الحمامات",
+          value: apartmentInfo.bathrooms,
+        },
+        acUnits: {
+          label: "عدد التكييفات",
+          value: apartmentInfo.acUnits,
+        },
+        beds: {
+          label: "عدد السراير",
+          value: apartmentInfo.beds,
+        },
+        balconies: {
+          label: "عدد الشرفات",
+          value: apartmentInfo.balconies,
+        },
+        tables: {
+          label: "عدد الطاولات",
+          value: apartmentInfo.tables,
+        },
+        chairs: {
+          label: "عدد الكراسي",
+          value: apartmentInfo.chairs,
+        },
+      });
+    }
   }, []);
 
+  useEffect(() => {
+    if (roomInfo) {
+      // Assuming roomInfo has the properties directly
+      const { acUnits, bedrooms, bathrooms, beds, balconies, tables, chairs } =
+        roomInfo;
 
+      // Ensure only numeric values are passed to addApartmentInfo
+      addApartmentInfo(
+        acUnits.value,
+        bedrooms.value,
+        bathrooms.value,
+        beds.value,
+        balconies.value,
+        tables.value,
+        chairs.value
+      );
+    }
+  }, [roomInfo]);
 
-  const CounterClass = ({ room }) => {
-    return (
-      <div className="CounterClass flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() =>
-            setDetails((prevDetails) => {
-              const updatedValue = prevDetails[room].value - 1;
-              const updatedDetails = {
-                ...prevDetails,
-                [room]: { ...prevDetails[room], value: updatedValue < 1 ? 1 : updatedValue },
-              };
-              return updatedDetails;
-            })
-          }
-          className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
-        >
-          -
-        </button>
-        <span>{Details[room].value}</span>
-        <button
-          type="button"
-          onClick={() =>
-            setDetails((prevDetails) => {
-              const updatedValue = prevDetails[room].value + 1;
-              const updatedDetails = {
-                ...prevDetails,
-                [room]: { ...prevDetails[room], value: updatedValue > 10 ? 10 : updatedValue },
-              };
-              return updatedDetails;
-            })
-          }
-          className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
-        >
-          +
-        </button>
-      </div>
-    );
-  };
-
-  const BoolenClass = ({ room }) => {
-    return (
-      <button
-        type="button"
-        onClick={() =>
-          setDetails((prevDetails) => {
-            const updatedDetails = {
-              ...prevDetails,
-              [room]: { ...prevDetails[room], value: !prevDetails[room].value },
-            };
-            return updatedDetails;
-          })
-        }
-        className={`border-2 w-28  h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100 ${
-          Details[room].value ? "bg-green-200" : "bg-gray-300"
-        }`}
-        aria-pressed={Details[room].value}
-      >
-        {Details[room].value ? "يوجد" : "لا يوجد"}
-      </button>
-    );
-  };
+  // Assuming roomInfo has the values to uptade the state on mount
 
   return (
     <div className="mx-auto w-[700px] text-right fadeInAnmation">
-      <h1 className="text-3xl font-semibold mb-8">أعطنا بعض المعلومات الرئيسية عن الغرفة</h1>
+      <h1 className="text-3xl font-semibold mb-8">
+        أعطنا بعض المعلومات الرئيسية عن الشقة
+      </h1>
 
       <div className="flex flex-col mx-auto">
-        {Object.keys(Details).map((room, index) => (
-          <div key={index} className=" fadeInAnmation flex justify-between items-center mb-6">
-            <h2 className="text-xl font-medium">{Details[room].name}</h2>
+        {Object.keys(roomInfo).map((room, index) => (
+          <div key={index} className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-medium">{roomInfo[room].label}</h2>
             <div className="flex items-center gap-3">
-              {index === 0 ? <CounterClass room={room} /> : <BoolenClass room={room} />}
+              <button
+                type="button"
+                onClick={() => handleDecrement(room)}
+                className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
+              >
+                -
+              </button>
+              <span className="text-lg font-semibold">
+                {roomInfo[room].value}
+              </span>
+              <button
+                type="button"
+                onClick={() => handleIncrement(room)}
+                className="border-2 w-9 h-9 text-2xl text-gray-600 border-gray-600 rounded-full hover:bg-gray-100"
+              >
+                +
+              </button>
             </div>
           </div>
         ))}
