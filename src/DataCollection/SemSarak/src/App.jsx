@@ -91,7 +91,7 @@ const Router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/none-admin",
+    path: "/Dashboard",
     element: <Dashboard />,
     errorElement: <ErrorPage />,
   },
