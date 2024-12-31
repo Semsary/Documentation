@@ -1,4 +1,6 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
+import React from "react"; // Or import * as React from 'react';
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ApartmentProvider from "./context/ApartmentContext";
 import AuthProvider from "./context/AuthContext";
@@ -6,6 +8,9 @@ import UserProvider from "./context/UserContext";
 import FetchDataProvider from "./context/FetchDataContext";
 import LoadingFallback from "./components/LoadingFallback";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import DisplayImages from "./Pages/ApartmentDetails/Sections/DisplayImages";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "./Firebase/Firebase";
 
 const LoginPage = lazy(() => import("./Pages/Login/LoginPage"));
 const SignUpPage = lazy(() => import("./Pages/Login/SignUpPage"));
@@ -25,6 +30,9 @@ const ApartmentDetails = lazy(() =>
   import("./Pages/ApartmentDetails/ApartmentDetails")
 );
 
+
+
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +46,11 @@ const Router = createBrowserRouter([
         <ApartmentDetails />
       </RequirdAuth>
     ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "images/:id",
+    element: <DisplayImages />,
     errorElement: <ErrorPage />,
   },
   { path: "login", element: <LoginPage />, errorElement: <ErrorPage /> },
@@ -97,12 +110,22 @@ const Router = createBrowserRouter([
   },
   {
     path: "*",
+
     element: <PageNotFound />,
     errorElement: <ErrorPage />,
   },
 ]);
 
+
+
+
 const App = () => {
+
+    useEffect(() => {
+      logEvent(analytics, "Visit_Website");
+    }, []);
+
+
   return (
     <AuthProvider>
       <ApartmentProvider>

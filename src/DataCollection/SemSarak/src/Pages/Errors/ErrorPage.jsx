@@ -1,6 +1,8 @@
 import { useRouteError } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaExclamationTriangle, FaRedo, FaEye, FaEyeSlash } from "react-icons/fa";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../Firebase/Firebase";
 
 const ErrorPage = () => {
   const error = useRouteError(); // Get the error object
@@ -15,6 +17,10 @@ const ErrorPage = () => {
   const reloadPage = () => {
     window.location.reload();
   };
+
+    useEffect(() => {
+      logEvent(analytics, "ErrorPage");
+    }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

@@ -37,6 +37,7 @@ const FetchDataProvider = ({ children }) => {
           locationCity: apartment.Location.city,
           price: apartment.Price.price,
           acUnits: apartment.ApartmentInfo.acUnits,
+          badge: apartment.Badge,
         };
       })
     );

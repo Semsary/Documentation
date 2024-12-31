@@ -22,20 +22,21 @@ const ProfileData = () => {
   //   setCurrentSectionIndex(index);
   // }, [UserData]);
 
+
+    const handleNext = () => {
+      if (currentSectionIndex < sections.length - 1) {
+        setCurrentSectionIndex(currentSectionIndex + 1);
+      }
+    };
+
+
   const sections = [
-    <MianInfo key="MianInfo" />,
-    <MoreUserInfo key="MoreUserInfo" />,
+    <MianInfo key="MianInfo" handleNext={handleNext} />,
+    <MoreUserInfo key="MoreUserInfo" handleNext={handleNext} />,
     <DoneProfile key="DoneProfile" />,
   ];
 
-  const handleNext = () => {
-      
-    if (currentSectionIndex < sections.length - 1) {
-      setCurrentSectionIndex(currentSectionIndex + 1);
-    }
 
-   
-  };
 
   const handlePrevious = () => {
     if (currentSectionIndex > 0) {
@@ -58,7 +59,7 @@ const ProfileData = () => {
           style={{ width: `${((currentSectionIndex + 1) * 100) / 2}%` }}
         ></div>
 
-        <div className="bg-blue-100 w-full h-full flex justify-between p-5">
+        {/* <div className="bg-blue-100 w-full h-full flex justify-between p-5">
           <button
             className="ButtonStyle1"
             onClick={handlePrevious}
@@ -74,7 +75,7 @@ const ProfileData = () => {
           >
             التالى
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

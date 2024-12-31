@@ -30,7 +30,7 @@ const handleCoverImageChange = async (event) => {
   const file = event.target.files[0];
   if (!file) return;
 
-  console.log("Uploading file:", file); // Check the file properties
+  // console.log("Uploading file:", file); // Check the file properties
 
   setCoverLoading(true);
   const uniqueFileName = `CoverImage_${Date.now()}_${file.name}`; // Ensure unique name
