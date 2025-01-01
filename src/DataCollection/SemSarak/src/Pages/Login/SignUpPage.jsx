@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsApple } from "react-icons/bs";
 import { FaSquareFacebook } from "react-icons/fa6";
@@ -11,6 +11,8 @@ import handleFirebaseError from "../../Validations/Errors";
 import LoginImage from "../../assets/Images/signup.jpg";
 import Logo from "../../assets/Images/Logo/Logo (1).png";
 import GoogleButton from "react-google-button";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../Firebase/Firebase";
 
 const SignUpPage = () => {
   const { signUp } = useAuth();
@@ -26,6 +28,10 @@ const SignUpPage = () => {
     confirmPassword: "تأكيد كلمة المرور",
     signUp: "تسجيل حساب",
   };
+
+    useEffect(() => {
+      logEvent(analytics, "ErrorPage");
+    }, []);
 
   const {
     register,

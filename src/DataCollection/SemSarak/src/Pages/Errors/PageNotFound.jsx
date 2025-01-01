@@ -1,6 +1,16 @@
+import { useEffect } from "react";
 import Logo from "../../assets/Images/Logo/Logo (1).png";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../Firebase/Firebase";
 
 const PageNotFound = () => {
+
+
+    useEffect(() => {
+      logEvent(analytics, "PageNotFound");
+    }, []);
+
+    
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
       <div className="text-center">

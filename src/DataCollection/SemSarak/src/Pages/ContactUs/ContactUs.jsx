@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Header/Navbar";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
-import { db } from "../../Firebase/Firebase"; // تأكد من استيراد إعدادات Firebase الخاصة بك
+import { analytics, db } from "../../Firebase/Firebase"; // تأكد من استيراد إعدادات Firebase الخاصة بك
 import { addDoc, collection } from "firebase/firestore";
 import { useFirebase } from "../../Firebase/useFirebase";
 import toast, { Toaster } from "react-hot-toast";
+import { logEvent } from "firebase/analytics";
 
 const ContactUs = () => {
   const { getUserId, getUserEmail } = useAuth();
@@ -27,6 +28,11 @@ const ContactUs = () => {
     const time = date.toLocaleTimeString();
     return `${date.toLocaleDateString()} ${time}`;
   };
+
+
+    useEffect(() => {
+      logEvent(analytics, "ContactUs_page_view");
+    }, []);
 
   return (
     <div>

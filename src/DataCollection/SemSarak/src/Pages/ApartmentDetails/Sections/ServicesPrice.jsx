@@ -29,7 +29,7 @@ const ServicesPrice = ({ data }) => {
       <div className="space-y-6">
         {Object.keys(servicesPrice).map(
           (key) =>
-            servicesPrice[key].price && (
+           (
               <div
                 key={key}
                 className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm"

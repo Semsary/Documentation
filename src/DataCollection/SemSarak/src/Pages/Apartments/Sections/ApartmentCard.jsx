@@ -12,6 +12,8 @@ const ApartmentCard = ({ apartment }) => {
       <div className="relative w-full h-48">
         <img
           loading="lazy"
+          height={192}
+          decoding="async"
           className="w-full h-full object-cover
                transition duration-200 ease-in-out transform hover:scale-105"
           src={apartment.coverImage}
@@ -21,11 +23,16 @@ const ApartmentCard = ({ apartment }) => {
           className="absolute inset-0 bg-gradient-to-t from-black hover:from-gray-700 
         transition duration-200 ease-in-out transform to-transparent opacity-50 brightness-95"
         ></div>
-        
+
         {/* Badge over the image */}
-        <div className="absolute top-2 left-2 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-bold">
-          مميزة
-        </div>
+
+        {apartment.badge == "None" ||
+        apartment.badge == "" ||
+        apartment.badge == null ? null : (
+          <div className="absolute top-2 left-2 bg-green-500 text-white py-1 px-3 rounded-full text-sm font-bold">
+            {apartment.badge == "None" ? "جديد" : apartment.badge}
+          </div>
+        )}
       </div>
 
       <div className="p-4">

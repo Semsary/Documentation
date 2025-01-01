@@ -11,13 +11,18 @@ import handleFirebaseError from "../../Validations/Errors";
 import LoginImage from "../../assets/Images/login.jpg";
 import Logo from "../../assets/Images/Logo/Logo (1).png";
 
-import { auth } from "../../Firebase/Firebase";
+import { analytics, auth } from "../../Firebase/Firebase";
+import { logEvent } from "firebase/analytics";
 const LoginPage = () => {
   const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const redirectPath = location.state?.path || "/";
 
+
+    useEffect(() => {
+      logEvent(analytics, "LoginPage");
+    }, []);
 
 
 

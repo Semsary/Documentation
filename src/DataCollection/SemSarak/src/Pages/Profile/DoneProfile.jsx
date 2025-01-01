@@ -21,7 +21,7 @@ const DoneProfile = () => {
 
   return (
     <div className="flex px-5 flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
-      {completed.FirstStep && completed.SecondStep ? (
+   
         <div className="bg-white p-10 rounded-2xl shadow-2xl max-w-md text-center">
         <FaCheckCircle className="text-green-500 text-5xl mb-4" />
         <h2 className="text-3xl font-bold text-gray-800 mb-4">
@@ -36,31 +36,7 @@ const DoneProfile = () => {
         >
           العودة إلى الصفحة الرئيسية
         </Link>
-      </div>) : (
-        <div className="bg-white p-10 rounded-2xl shadow-2xl max-w-md text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            اكمال الملف الشخصي
-          </h2>
-          <p className="text-gray-700 mb-8">
-توجد بيانات لم يتم حفظها. يُرجى التأكد من حفظ البيانات بعد إدخالها بالضغط على زر "حفظ البيانات".          </p>
-          <button
-          onClick={() => window.location.reload()}
-            className="w-full py-3 px-4 text-lg text-white bg-blue-500 rounded-xl hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50"
-            // to="/profile"
-          >
-            تحديث الملف الشخصي
-          </button>
-{/* <div className="my-7"></div>
-          <Link
-          
-          className="w-full py-3 px-4 text-lg text-white bg-blue-500 rounded-xl hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50"
-          to="/profile"
-        >
-          تحديث الملف الشخصي
-        </Link> */}
-        </div>
-      )
-      }
+      </div>
     </div>
   );
 };

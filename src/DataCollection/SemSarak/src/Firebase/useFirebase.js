@@ -122,7 +122,6 @@ export const useFirebase = () => {
       collection(db, "ratings"),
       where("apartmentId", "==", apartmentId)
     );
-
     const snapshot = await getDocs(ratingsRef);
     const ratings = [];
     snapshot.forEach((doc) => {
@@ -131,6 +130,25 @@ export const useFirebase = () => {
 
     return ratings;
   };
+
+
+   const getRatingsForApartmentForUser = async (apartmentId, userId) => {
+    const ratingsRef = query(
+      collection(db, "ratings"),
+      where("apartmentId", "==", apartmentId),
+      where("userId", "==", userId)
+    );
+    const snapshot = await getDocs(ratingsRef);
+    const ratings = [];
+    snapshot.forEach((doc) => {
+      ratings.push(doc.data());
+    });
+
+    return ratings;
+  };
+
+
+
 
   const getUserEmailById = async (userId) => {
     const userRef = doc(db, "users", userId);
@@ -212,5 +230,6 @@ export const useFirebase = () => {
     checkSecondFlag,
     getLogedUserData,
     addSugetions,
+    getRatingsForApartmentForUser,
   };
 };
