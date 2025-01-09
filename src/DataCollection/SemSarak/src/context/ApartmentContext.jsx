@@ -56,8 +56,8 @@ const ApartmentProvider = ({ children }) => {
           CoverImage: "",
           Images: [],
           display: false,
-          Badge: "",
-          MetaData: "",
+          Badge: "None",
+          MetaData: "None",
           Servicses: {
             wifi: false,
             tv: false,
@@ -156,11 +156,17 @@ const ApartmentProvider = ({ children }) => {
   };
 
 
+  const addBadge = () => {
+    setApartmentData((prevData) => {
+      return { ...prevData, Badge: "None",MetaData:"None" };
+    });
+  };
+
 
 
 
   const SaveApartementData = () => {
-   
+   addBadge();
     console.log("done");
 
 

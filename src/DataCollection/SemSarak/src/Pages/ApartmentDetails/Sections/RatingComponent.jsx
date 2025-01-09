@@ -12,21 +12,28 @@ const RatingComponent = ({ id, comments }) => {
 
   useEffect(() => {
     console.log("commentUpdated : ", commentUpdated);
-    console.log("Old", ratingData );
+    console.log("Old", ratingData);
   }, [commentUpdated]);
 
-  const fetchRatings = useCallback(async () => {
-    if (ratingData.length === 0) {
+const [hasFetched, setHasFetched] = useState(false);
+
+const fetchRatings = useCallback(async () => {
+  if (!hasFetched) {
+    try {
       const ratings = await getAllRatingsForApartment(id);
       setRatingData(ratings);
+      console.log("Fetched Ratings:", ratings);
+      setHasFetched(true); // Prevent further fetches.
+    } catch (error) {
+      console.error("Error fetching ratings:", error);
     }
-    console.log("Old", ratingData );
+  }
+}, [id, getAllRatingsForApartment, hasFetched]);
 
-  }, [id, ratingData.length, getAllRatingsForApartment]);
+useEffect(() => {
+  fetchRatings();
+}, [fetchRatings, commentUpdated]);
 
-  useEffect(() => {
-    fetchRatings();
-  }, [fetchRatings, commentUpdated]);
 
   useEffect(() => {
     if (comments) {
@@ -72,8 +79,8 @@ const RatingComponent = ({ id, comments }) => {
               const overallRating = calculateOverallRating(rate.rating);
               const comment = rate.rating?.comment || "لا يوجد تعليق";
               const userName = rate.userName || "مستخدم";
-              if(!rate.rating.displayName){
-                rate.userName  = "مستخدم " ; 
+              if (!rate.rating.displayName) {
+                rate.userName = "مستخدم ";
               }
 
               const userImage =

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFirebase } from "../../../Firebase/useFirebase";
 import { useAuth } from "../../../context/AuthContext";
 import Rating from "../../../components/Rating";
@@ -6,31 +6,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useFetchDataContext } from "../../../context/FetchDataContext";
 
 const AddRatingComponent = ({ id }) => {
-  const { addOrUpdateRating, getAllRatingsForApartment } = useFirebase();
-  const { SearchUser } = useFirebase();
-  const { getUserId } = useAuth();
-  const Uid = getUserId();
-  const Udata = SearchUser(Uid);
-  const [userData, setUserData] = useState({
-    name: "s",
-    email: "s",
-    type: "s",
-  });
-
-    const { Addcomment } = useFetchDataContext();
-
-  
-  
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const data = await Udata; // Wait for the data to resolve
-      setUserData(data); // Set the resolved data in the state
-    };
-
-
-    fetchUserData(); // Call the async function
-  }, [Uid, Udata]); // Include Uid and Udata as dependencies if they can change
+  const {
+    addOrUpdateRating,
+    getAllRatingsForApartment,
+    getRatingsForApartmentForUser,
+  } = useFirebase();
 
   const [rating, setRating] = useState({
     services: { name: "الخدمات", rate: 0 },
@@ -45,8 +25,41 @@ const AddRatingComponent = ({ id }) => {
     },
     overallSatisfaction: { name: "مدى رضاك عن الشقة", rate: 0 },
     comment: "",
-    displayName : true
+    displayName: true,
   });
+
+  const { SearchUser } = useFirebase();
+  const { getUserId } = useAuth();
+  const Uid = getUserId();
+  const Udata = SearchUser(Uid);
+  const [userData, setUserData] = useState({
+    name: "s",
+    email: "s",
+    type: "s",
+  });
+
+  const { Addcomment } = useFetchDataContext();
+
+  const fetchRatings = useCallback(async () => {
+    const userRate = await getRatingsForApartmentForUser(id, Uid);
+    if (userRate.length > 0) {
+      setRating(userRate[0].rating);
+    }
+  }, [id, Uid]);
+
+  useEffect(() => {
+    fetchRatings();
+  }, [fetchRatings]);
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await Udata; // Wait for the data to resolve
+      setUserData(data); // Set the resolved data in the state
+    };
+
+    fetchUserData(); // Call the async function
+  }, [Uid, Udata]); // Include Uid and Udata as dependencies if they can change
 
   const handleRatingChange = (category, newRating) => {
     setRating((prevRating) => ({
@@ -58,10 +71,19 @@ const AddRatingComponent = ({ id }) => {
     }));
   };
 
-  const HandelCheckName = () => {
+  // const HandelCheckName = () => {
+  //   setRating((prevRating) => ({
+  //     ...prevRating,
+  //     displayName: !prevRating.displayName,
+  //   }));
+  // };
+
+
+  const HandelCheckName = (e) => {
+    let value = e.target.checked;
     setRating((prevRating) => ({
       ...prevRating,
-      displayName: !prevRating.displayName,
+      displayName: value,
     }));
   };
 
@@ -77,7 +99,6 @@ const AddRatingComponent = ({ id }) => {
       comment: e.target.value, // Update the comment in the state
     }));
   };
-
 
   // check if all ratings not equal to 0
   const checkRating = () => {
@@ -95,28 +116,25 @@ const AddRatingComponent = ({ id }) => {
       return;
     }
 
-
     try {
-    addOrUpdateRating(
-      Uid,
-      id,
-      rating,
-      userData.name,
-      userData.email,
-      userData.image
-    );
-    Addcomment();
-    toast.success("تم تقديم التقييم بنجاح");
-    setTimeout(() => {
-      toast("شكرا على مساهمتك في تحسين خدماتنا", {
-        icon: "🫶",
-      });
-    }, 1000); // 1 second delay
-
-  } catch (error) {
-    toast.error("برجاء اكمال جميع بيانات الملف الشخصي لتتمكن من تقديم تقييم");
+      addOrUpdateRating(
+        Uid,
+        id,
+        rating,
+        userData.name,
+        userData.email,
+        userData.image
+      );
+      Addcomment();
+      toast.success("تم تقديم التقييم بنجاح");
+      setTimeout(() => {
+        toast("شكرا على مساهمتك في تحسين خدماتنا", {
+          icon: "🫶",
+        });
+      }, 1000); // 1 second delay
+    } catch (error) {
+      toast.error("برجاء اكمال جميع بيانات الملف الشخصي لتتمكن من تقديم تقييم");
     }
-
   };
 
   const adDescription = {
@@ -212,26 +230,27 @@ const AddRatingComponent = ({ id }) => {
             aria-label="Comment about the apartment"
           />
 
-         <div className="flex justify-between">
-          <div>
-          <label className="text text-gray-500 mt-2">
-            <input type="checkbox" name="" id="" className="mr-2"   onChange={HandelCheckName} />
-            اخفاء اسمى من التعليقات العامة
-          </label>
-          </div>
+          <div className="flex justify-between">
+            <div>
+              <label className="text text-gray-500 mt-2">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="mr-2"
+                  onChange={HandelCheckName}
+                />
+                اخفاء اسمى من التعليقات العامة
+              </label>
+            </div>
 
-          <div>
-
-          <label className="text-xs text-gray-500 mt-2">
-            {rating.comment.length}/300
-          </label>
+            <div>
+              <label className="text-xs text-gray-500 mt-2">
+                {rating.comment.length}/300
+              </label>
+            </div>
           </div>
-          
-         </div>
-          
-            
         </div>
-        
 
         <button
           onClick={submitRating}

@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Header/Navbar";
 import { Link } from "react-router-dom";
+import { analytics } from "../../Firebase/Firebase";
+import { logEvent } from "firebase/analytics";
+// import { db } from "../../Firebase/Firebase";
+// import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+
+
 
 const AboutUs = () => {
+
+
+  useEffect(() => {
+     logEvent(analytics, "AboutUs_page_view");
+  }, []);
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -96,6 +108,35 @@ const AboutUs = () => {
             للاستفادة من هذه المنصة الرائعة.
           </p>
 
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            لماذا نطلب معلومات مثل الطول، الوزن، وهل الشخص مدخن؟
+          </h2>
+          <p className="text-lg text-gray-600 my-8">
+            الهدف الرئيسي من موقع{" "}
+            <span className="font-bold text-mainColor">سمساري</span> هو توفير
+            تجربة استخدام أكثر تخصيصًا وفعالية للمستخدمين. ولتحقيق ذلك، نقوم
+            بجمع بعض المعلومات مثل الطول، الوزن، وعادة التدخين، والتي تساهم في
+            بناء نظام توصيات يعتمد على الذكاء الاصطناعي لتحسين اقتراحات الشقق
+            التي تناسبك. هذه المعلومات تساعدنا في تقديم توصيات دقيقة وملائمة
+            أكثر لك، مما يسهل عليك العثور على الشقق المثالية بناءً على احتياجاتك
+            الشخصية.
+          </p>
+          <p className="text-lg text-gray-600 my-8">
+            نحن نؤكد لك أن البيانات التي نطلبها ليست معلومات شخصية يمكن أن تكشف
+            عن هويتك مثل اسمك أو عنوانك، وبالتالي لا توجد أي مخاوف بشأن خصوصيتك.
+            نحن ملتزمون بتوفير بيئة آمنة لضمان حماية بياناتك الشخصية. إذا كنت
+            ترغب في الحفاظ على خصوصيتك، يمكنك ببساطة عدم إدخال اسمك عند التسجيل،
+            حيث أن الموقع لن يطلب منك أي معلومات قد تكشف عن هويتك الشخصية.
+          </p>
+          <p className="text-lg text-gray-600 my-8">
+            أما إذا كنت غير متأكد من بعض التفاصيل مثل وزنك أو طولك، فلا داعي
+            للقلق! يمكنك إدخال هذه البيانات بشكل تقريبي دون الحاجة إلى أن تكون
+            دقيقة 100%. النظام سيعمل بشكل فعال باستخدام القيم التقريبية التي
+            تقدمها، ولن يؤثر ذلك على دقة التوصيات التي ستتلقاها. نحن فقط نحتاج
+            إلى بيانات تساعد في تحسين تجربة المستخدم وتقديم أفضل الخيارات
+            المتاحة.
+          </p>
+
           <h2 className="text-2xl font-bold text-gray-800 mb-4">في النهاية</h2>
           <p className="text-lg text-gray-600 my-8">
             نحن هنا لنجعل حياتك أسهل. بتقديم رأيك، ستساعدنا على تحسين{" "}
@@ -117,10 +158,12 @@ const AboutUs = () => {
               اضغط هنا لتواصل معنا
             </Link>
           </div>
-
           <div className="text-center mt-16">
             <p className="text-gray-600">
-              This is the demo version of the website, version 1.3.1 © 2024.
+              This is the demo version of the website, version 1.6.0 © 2024.
+            </p>
+            <p className="text-gray-500 text-sm">
+              Last updated on: November 25, 2024, 01:21:20 PM
             </p>
           </div>
         </div>

@@ -4,10 +4,16 @@ import { useUserContext } from "../../context/UserContext";
 import { useFirebase } from "../../Firebase/useFirebase";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { analytics } from "../../Firebase/Firebase";
+import { logEvent } from "firebase/analytics";
 
 const UserAccount = () => {
   const { getUserId, getUserFullEmail } = useAuth();
   const Uid = getUserId();
+
+    useEffect(() => {
+      logEvent(analytics, "UserAccount");
+    }, []);
 
   const [data, setData] = useState({
     name: "",

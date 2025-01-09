@@ -57,7 +57,7 @@ const SummitApartments = ({handleNext}) => {
 
     try{
       addUserData(Uid, Email, getDateTime());
-      console.log(Uid, Email, getDateTime());
+      // console.log(Uid, Email, getDateTime());
     }catch (error) {
 
       addUserData("Uid", "Email", "getDateTime");

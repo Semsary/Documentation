@@ -3,11 +3,18 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
-const MoreUserInfo = () => {
+const MoreUserInfo = ({ handleNext }) => {
   const { getUserId, getUserEmail } = useAuth();
   const { addUserMoreData } = useUserContext();
-
+  const redirectToHome = () => {
+    setTimeout(() => {
+      // Navigate("/");
+      // notify2();
+      handleNext();
+    }, 500);
+  };
   const Texts = {
     title: "تفضيلاتك الشخصية",
     description:
@@ -22,6 +29,9 @@ const MoreUserInfo = () => {
     // console.log(data);
     const Uid = getUserId();
     addUserMoreData(data, Uid);
+
+    toast.success(" تم حفظ بياناتك الاساسية بنجاح");
+    redirectToHome();
   };
 
   return (
@@ -214,6 +224,7 @@ const MoreUserInfo = () => {
           ></div>
         </form>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

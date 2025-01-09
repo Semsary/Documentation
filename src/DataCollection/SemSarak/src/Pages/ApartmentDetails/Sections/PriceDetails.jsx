@@ -42,13 +42,13 @@ const PriceDetails = ({ data }) => {
         <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
           <span className="text-gray-600 font-semibold">نوع السكن:</span>
           <span className="text-mainColor font-medium">
-            {rentType[priceDetails.homeType]?.name || "نوع السكن غير معروف"}
+            {rentType[priceDetails.homeType]?.name || "سكن طلاب   "}
           </span>
         </div>
 
         {/* Guarantee */}
         <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm">
-          <span className="text-gray-600 font-semibold">الضمان:</span>
+          <span className="text-gray-600 font-semibold">التأمين:</span>
           <span className="text-mainColor font-medium">
             {priceDetails.guarantee} جنيه
           </span>

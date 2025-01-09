@@ -3,10 +3,19 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
-const MianInfo = () => {
+const MianInfo = ({ handleNext }) => {
   const { getUserId, getUserEmail } = useAuth();
   const { addUserMainData } = useUserContext();
+
+  const redirectToHome = () => {
+    setTimeout(() => {
+      // Navigate("/");
+      // notify2();
+      handleNext();
+    }, 500);
+  };
 
   const Texts = {
     title: "معلوماتك الأساسية",
@@ -39,6 +48,9 @@ const MianInfo = () => {
     // setFormData(data);
     // console.log(data);
     addUserMainData(data, getUserId());
+    toast.success(" تم حفظ تسجيل بياناتك بنجاح");
+    redirectToHome();
+
     // addLocation(data.city, data.Govern, data.floorNumber);
   };
 
@@ -155,6 +167,7 @@ const MianInfo = () => {
     "جامعة دراية",
     "جامعة سفنكس",
     "جامعة ميريت",
+    "الأهرام الكندية",
 
     // الجامعات الأهلية
     "جامعة الملك سلمان الدولية",
@@ -201,13 +214,13 @@ const MianInfo = () => {
               htmlFor="name"
               className="col-span-1 sm:col-span-2 lg:col-span-4"
             >
-              الاسم
+              الاسم عربي (اختياري)
               <input
                 type="text"
                 id="name"
                 {...register("name")}
                 className="inputStyle1 my-2"
-                placeholder="أدخل الاسم  (اختياري) "   
+                placeholder="أدخل الاسم  (اختياري) "
               />
             </label>
 
@@ -451,6 +464,8 @@ const MianInfo = () => {
           </div>
         </form>
       </div>
+
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

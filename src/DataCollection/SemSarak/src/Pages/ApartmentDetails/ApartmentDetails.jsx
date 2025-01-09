@@ -1,8 +1,10 @@
 import React, { useEffect, useState, Suspense } from "react";
 import Header from "../../components/Header/Header";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFetchDataContext } from "../../context/FetchDataContext";
 import LoadingFallback from "../../components/LoadingFallback";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../../Firebase/Firebase";
 
 // Lazy load the sections
 const ImageSection = React.lazy(() => import("./Sections/ImageSection"));
@@ -30,11 +32,16 @@ const ApartmentDetails = () => {
   const [apartmentData, setApartmentData] = useState(null);
   const [NoData, setNoData] = useState(false);
 
+    useEffect(() => {
+      logEvent(analytics, `Apartment_view_${id}`);
+    }, [id]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getApartmentDataById(id);
-        console.log("data from ApartmentDetails: ", data);
+        // console.log("data from ApartmentDetails: ", data);
         if (data === undefined) {
           setNoData(true);
         }
@@ -45,7 +52,7 @@ const ApartmentDetails = () => {
         setNoData(true);
         // alert("Error fetching apartment data");
       }
-      console.log("data from NoData : ", NoData);
+      // console.log("data from NoData : ", NoData);
     };
 
     if (id) {
@@ -63,21 +70,14 @@ const ApartmentDetails = () => {
 
   // update the compnent when NoData change
   useEffect(() => {
-    console.log("data from NoData : ", NoData);
+    // console.log("data from NoData : ", NoData);
   }, [NoData]);
-
-  
-
-
-
 
   return (
     <>
       <Header />
       {NoData ? (
-        
-
-<NoDataPage/>
+        <NoDataPage />
       ) : (
         <div className="py-24 px-1 sm:px-10 md:px-10 lg:px-32 xl:px-40 2xl:px-52">
           {apartmentData && (
@@ -88,6 +88,12 @@ const ApartmentDetails = () => {
                   images={apartmentData?.Images || ""}
                 />
               </Suspense>
+
+              <Link to={`/images/${id}`} className=" w-full">
+                <button className="bg-mainColor hover:bg-mainColorHover text-white w-48 font-bold py-2 px-4 rounded-full mr-16">
+                  معرض الصور
+                </button>
+              </Link>
               <Suspense fallback={<LoadingFallback />}>
                 <NameSection
                   name={apartmentData.name}
@@ -95,6 +101,7 @@ const ApartmentDetails = () => {
                   prise={apartmentData.Price.price}
                 />
               </Suspense>
+
               <hr />
               <Suspense fallback={<LoadingFallback />}>
                 <Services data={apartmentData?.Servicses || ["", ""]} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomeServices from "./Sections.jsx/HomeServices";
 import Location from "./Sections.jsx/Location";
 import Pricing from "./Sections.jsx/Pricing";
@@ -11,9 +11,20 @@ import SurroundingServices from "./Sections.jsx/SurroundingServices";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/Images/Logo/Logo (2).png";
 import WaitingAcc from "./Sections.jsx/WatingAcc";
+import { analytics } from "../../Firebase/Firebase";
+import { logEvent } from "firebase/analytics";
+
+// import { db } from "../../Firebase/Firebase";
+// import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+
+
 
 const AddAppartementPage = () => {
-  
+
+
+  useEffect(() => {
+    logEvent(analytics, "AddAppartementPage_page_view");
+  }, []);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   const handleNext = () => {
@@ -27,7 +38,7 @@ const AddAppartementPage = () => {
       setCurrentSectionIndex(currentSectionIndex - 1);
     }
   };
-  
+
   const sections = [
     // <Apartment key="Apartment" />,
     <Type key="Type" />,
@@ -41,7 +52,6 @@ const AddAppartementPage = () => {
     <SummitApartments key="SummitApartments" handleNext={handleNext} />,
     <WaitingAcc key="WaitingAcc" />,
   ];
-
 
   return (
     <div className=" flex flex-col justify-between">
@@ -81,21 +91,24 @@ const AddAppartementPage = () => {
         ></div>
 
         <div className="bg-blue-100 w-full h-full flex justify-between p-5">
-          <button
-            className="ButtonStyle1"
-            onClick={handlePrevious}
-            disabled={currentSectionIndex === 0}
-          >
-            السابق
-          </button>
-
-          <button
-            className="ButtonStyle1"
-            onClick={handleNext}
-            disabled={currentSectionIndex === sections.length - 1}
-          >
-            التالى
-          </button>
+          {currentSectionIndex <= 8 ? (
+            <button
+              className="ButtonStyle1"
+              onClick={handlePrevious}
+              disabled={currentSectionIndex === 0}
+            >
+              السابق
+            </button>
+          ) : null}
+          {currentSectionIndex <= 7 ? (
+            <button
+              className="ButtonStyle1"
+              onClick={handleNext}
+              disabled={currentSectionIndex === sections.length - 1}
+            >
+              التالى
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
