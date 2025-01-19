@@ -1,0 +1,9 @@
+Our project is a special web platform called Semsary that helps make it easier to manage short-term rentals in cities. 
+Our website will be a place where people can find reliable listings of apartments, learn about fair pricing, and discover essential services nearby. 
+It will focus on important things like providing secure rental options, ensuring transparency, and offering verified reviews to make renting safer and more convenient.
+
+Our platform will include tools to suggest the best rental prices, location-based insights for better decisions, 
+and ways for landlords and tenants to communicate effectively. It will also have features for filtering properties by important criteria.
+
+Our aim is to simplify the rental process for tenants, landlords, and families by creating a trustworthy, 
+user-friendly space. With secure payment options and a way to handle reviews and disputes, we hope to make renting a smooth and satisfying experience for everyone involved.
