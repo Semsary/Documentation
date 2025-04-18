@@ -12,6 +12,6 @@
         public Landlord LandlordSender { get; set; } 
         public Landlord LandlordReceiver { get; set; } 
         public CustomerService CustomerServiceSender { get; set; } 
-        public CustomerService CustomerServiceReceiver { get; set; } // navigational property
+        public CustomerService CustomerServiceReceiver { get; set; }
     }
 }

@@ -9,7 +9,7 @@
         public int Amenities { get; set; }
         public string NearbyPlaces { get; set; }
         public byte Status { get; set; }
-        public List<int> Services { get; set; }
+        public List<byte> Services { get; set; }
         public List<HouseImage> HouseImages { get; set; }
         public House House { get; set; }
 

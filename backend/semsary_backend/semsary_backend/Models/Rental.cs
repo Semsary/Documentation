@@ -11,13 +11,12 @@
 
         public DateTime CreationDate { get; set; } 
         public DateTime InspectionDate { get; set; }
-        public int status { get; set; }
+        public byte status { get; set; }
 
-        // navigational properties
-        public Complaint Complaint { get; set; } // foreign key
-        public ArrivalRequest ArrivalRequest { get; set; } // navigational property
+        public Complaint Complaint { get; set; } 
+        public ArrivalRequest ArrivalRequest { get; set; } 
         public Tenant Tenant { get; set; }
-        public RentalUnit RentalUnit { get; set; } // navigational property
+        public RentalUnit RentalUnit { get; set; } 
 
 
     }
