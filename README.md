@@ -52,15 +52,15 @@ This project is an apartment rental platform designed primarily for university s
  ├── 📄 README.md
 
 ```
-## 📂 Documentation Files  
+## Project Documentation  
 
-🔹 **Full Documentation** 📄  
-   [📥 Download PDF](docs/Full%20Documentation/Graduation%20Project%20-%20Part%20I.pdf)  
+The following table contains all project-related documentation, organized by academic term. Full documentation files are presented first, followed by presentations.  
 
-🔹 **Presentation** 🎤  
-   [📥 Download PPTX](docs/Full%20Documentation/Presentation%20-%20Part%20I.pptx)
-
-
+| Term             | Type                | File                                     |
+|-----------------|-------------------|-----------------------------------------|
+| **First Term**   | Full Documentation | [Graduation Project – Part I (PDF)](docs/Full%20Documentation/Graduation%20Project%20-%20Part%20I.pdf) |
+| **Second Term**  | Full Documentation | [Graduation Project – Part II (PDF)](docs/Full%20Documentation/Graduation%20Project%20-%20Part%202.pdf) |
+| **powerpoint**   | Presentation | [Presentation – Part I (PPTX)](docs/Full%20Documentation/Presentation%20-%20Part%20I.pptx) |
 
 ---
 
